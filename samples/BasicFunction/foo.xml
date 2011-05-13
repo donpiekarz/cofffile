@@ -1,0 +1,13 @@
+<cofffile>
+	<image_file_header Machine="332" NumberOfSections="-1" TimeDateStamp="-1" PointerToSymbolTable="-1" NumberOfSymbols = "-1" SizeOfOptionalHeader="0" Characteristics="260" />
+	<image_section_header Name=".text" Misc="0" Misc_PhysicalAddress = "0" Misc_VirtualSize = "0" VirtualAddress = "0"	SizeOfRawData = "-1" PointerToRawData = "-1" PointerToRelocations = "-1" PointerToLinenumbers = "0" NumberOfRelocations = "-1" NumberOfLinenumbers = "0" Characteristics = "1610612768" />
+	<image_section Type="file" Filename="foo.bin" />
+	<image_symbol_table_item Name=".file" Value="0" SectionNumber = "65534" Type = "0" StorageClass = "103" NumberOfAuxSymbols = "1" />
+	<image_symbol_table_item Name="foo.c" Value="0" SectionNumber = "0" Type = "0" StorageClass = "0" NumberOfAuxSymbols = "0" />
+	<image_symbol_table_item Name="_foo" Value="0" SectionNumber = "1" Type = "32" StorageClass = "2" NumberOfAuxSymbols = "1" />
+	<image_symbol_table_item Name="" Value="0" SectionNumber = "0" Type = "0"	StorageClass = "0" NumberOfAuxSymbols = "0" />
+	<image_symbol_table_item Name=".text" Value="0" SectionNumber = "1" Type = "0" StorageClass = "3" NumberOfAuxSymbols = "1" />
+	<image_symbol_table_item Name="" Value="0" SectionNumber = "0" Type = "0" StorageClass = "0" NumberOfAuxSymbols = "0" />
+	<image_symbol_string_table Length = "0" ValueLength = "0" Type = "0" />
+</cofffile>
+
