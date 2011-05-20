@@ -1,0 +1,17 @@
+
+This sample shows how create some COFF file.
+
+Binary file called 'foo.bin' contains body of function. Function 'foo' is saved in file 'foo.c'.
+In file 'foo.xml' are definitions of necessary headers.
+
+
+Trace:
+>build.py
+>gcc -o main.exe main.c foo.o
+>main.exe
+
+main.exe output:
+begin
+foo result: 4
+bar result: 1
+end
