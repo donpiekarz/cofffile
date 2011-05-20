@@ -47,13 +47,13 @@ class COFF:
         self.image_file_header = pefile.Structure(pefile.PE.__IMAGE_FILE_HEADER_format__)
         self.image_file_header.__unpacked_data_elms__ = (0, 0, 0, 0, 0, 0, 0)
         
-        self.image_file_header.Machine = int(image_file_header.attributes['Machine'].value) 
-        self.image_file_header.NumberOfSections = int(image_file_header.attributes['NumberOfSections'].value) 
-        self.image_file_header.TimeDateStamp = int(image_file_header.attributes['TimeDateStamp'].value)
-        self.image_file_header.PointerToSymbolTable = int(image_file_header.attributes['PointerToSymbolTable'].value) 
-        self.image_file_header.NumberOfSymbols = int(image_file_header.attributes['NumberOfSymbols'].value)
-        self.image_file_header.SizeOfOptionalHeader = int(image_file_header.attributes['SizeOfOptionalHeader'].value) 
-        self.image_file_header.Characteristics = int(image_file_header.attributes['Characteristics'].value)
+        self.image_file_header.Machine = self.__parse_machine_type__(image_file_header.attributes['Machine'].value)
+        self.image_file_header.NumberOfSections = int(image_file_header.attributes['NumberOfSections'].value, 0) 
+        self.image_file_header.TimeDateStamp = int(image_file_header.attributes['TimeDateStamp'].value, 0)
+        self.image_file_header.PointerToSymbolTable = int(image_file_header.attributes['PointerToSymbolTable'].value, 0) 
+        self.image_file_header.NumberOfSymbols = int(image_file_header.attributes['NumberOfSymbols'].value, 0)
+        self.image_file_header.SizeOfOptionalHeader = int(image_file_header.attributes['SizeOfOptionalHeader'].value, 0) 
+        self.image_file_header.Characteristics = int(image_file_header.attributes['Characteristics'].value, 0)
         
         # Image Section Header
         image_section_headers = cofffile.getElementsByTagName("image_section_header")
@@ -62,17 +62,17 @@ class COFF:
             new_image_section_header.__unpacked_data_elms__ = ('', 0, 0, 0, 0, 0, 0, 0, 0, 0)
         
             new_image_section_header.Name = str(image_section_header.attributes['Name'].value)
-            new_image_section_header.Misc = int(image_section_header.attributes['Misc'].value)
-            new_image_section_header.Misc_PhysicalAddress = int(image_section_header.attributes['Misc_PhysicalAddress'].value)
-            new_image_section_header.Misc_VirtualSize = int(image_section_header.attributes['Misc_VirtualSize'].value)
-            new_image_section_header.VirtualAddress = int(image_section_header.attributes['VirtualAddress'].value)
-            new_image_section_header.SizeOfRawData = int(image_section_header.attributes['SizeOfRawData'].value)
-            new_image_section_header.PointerToRawData = int(image_section_header.attributes['PointerToRawData'].value)
-            new_image_section_header.PointerToRelocations = int(image_section_header.attributes['PointerToRelocations'].value)
-            new_image_section_header.PointerToLinenumbers = int(image_section_header.attributes['PointerToLinenumbers'].value)
-            new_image_section_header.NumberOfRelocations = int(image_section_header.attributes['NumberOfRelocations'].value)
-            new_image_section_header.NumberOfLinenumbers = int(image_section_header.attributes['NumberOfLinenumbers'].value)
-            new_image_section_header.Characteristics = int(image_section_header.attributes['Characteristics'].value)
+            new_image_section_header.Misc = int(image_section_header.attributes['Misc'].value, 0)
+            new_image_section_header.Misc_PhysicalAddress = int(image_section_header.attributes['Misc_PhysicalAddress'].value, 0)
+            new_image_section_header.Misc_VirtualSize = int(image_section_header.attributes['Misc_VirtualSize'].value, 0)
+            new_image_section_header.VirtualAddress = int(image_section_header.attributes['VirtualAddress'].value, 0)
+            new_image_section_header.SizeOfRawData = int(image_section_header.attributes['SizeOfRawData'].value, 0)
+            new_image_section_header.PointerToRawData = int(image_section_header.attributes['PointerToRawData'].value, 0)
+            new_image_section_header.PointerToRelocations = int(image_section_header.attributes['PointerToRelocations'].value, 0)
+            new_image_section_header.PointerToLinenumbers = int(image_section_header.attributes['PointerToLinenumbers'].value, 0)
+            new_image_section_header.NumberOfRelocations = int(image_section_header.attributes['NumberOfRelocations'].value, 0)
+            new_image_section_header.NumberOfLinenumbers = int(image_section_header.attributes['NumberOfLinenumbers'].value, 0)
+            new_image_section_header.Characteristics = int(image_section_header.attributes['Characteristics'].value, 0)
             
             self.image_section_headers.append(new_image_section_header)
         
@@ -90,9 +90,9 @@ class COFF:
             new_image_relocation = pefile.Structure(self.__IMAGE_RELOCATION_format__)
             new_image_relocation.__unpacked_data_elms__ = (0, 0, 0)
             
-            new_image_relocation.RVA = int(image_relocation.attributes['RVA'].value)
-            new_image_relocation.SymbolTableIndex = int(image_relocation.attributes['SymbolTableIndex'].value)
-            new_image_relocation.Type = int(image_relocation.attributes['Type'].value)
+            new_image_relocation.RVA = int(image_relocation.attributes['RVA'].value, 0)
+            new_image_relocation.SymbolTableIndex = int(image_relocation.attributes['SymbolTableIndex'].value, 0)
+            new_image_relocation.Type = int(image_relocation.attributes['Type'].value, 0)
             
             self.image_relocations.append(new_image_relocation)
         
@@ -103,11 +103,11 @@ class COFF:
             new_image_symbol_table_item.__unpacked_data_elms__ = ('', 0, 0, 0, 0, 0)
             
             new_image_symbol_table_item.Name = str(image_symbol_table_item.attributes['Name'].value)
-            new_image_symbol_table_item.Value = int(image_symbol_table_item.attributes['Value'].value)
-            new_image_symbol_table_item.SectionNumber = int(image_symbol_table_item.attributes['SectionNumber'].value)
-            new_image_symbol_table_item.Type = int(image_symbol_table_item.attributes['Type'].value)
-            new_image_symbol_table_item.StorageClass = chr(int(image_symbol_table_item.attributes['StorageClass'].value))
-            new_image_symbol_table_item.NumberOfAuxSymbols = chr(int(image_symbol_table_item.attributes['NumberOfAuxSymbols'].value))
+            new_image_symbol_table_item.Value = int(image_symbol_table_item.attributes['Value'].value, 0)
+            new_image_symbol_table_item.SectionNumber = int(image_symbol_table_item.attributes['SectionNumber'].value, 0)
+            new_image_symbol_table_item.Type = int(image_symbol_table_item.attributes['Type'].value, 0)
+            new_image_symbol_table_item.StorageClass = chr(int(image_symbol_table_item.attributes['StorageClass'].value, 0))
+            new_image_symbol_table_item.NumberOfAuxSymbols = chr(int(image_symbol_table_item.attributes['NumberOfAuxSymbols'].value, 0))
             
             self.image_symbol_table.append(new_image_symbol_table_item)
             
@@ -118,9 +118,9 @@ class COFF:
         self.image_symbol_string_table = pefile.Structure(pefile.PE.__StringTable_format__)
         self.image_symbol_string_table.__unpacked_data_elms__ = (0, 0, 0)
          
-        self.image_symbol_string_table.Length = int(image_symbol_string_table.attributes['Length'].value) 
-        self.image_symbol_string_table.ValueLength = int(image_symbol_string_table.attributes['ValueLength'].value) 
-        self.image_symbol_string_table.Type = int(image_symbol_string_table.attributes['Type'].value) 
+        self.image_symbol_string_table.Length = int(image_symbol_string_table.attributes['Length'].value, 0)
+        self.image_symbol_string_table.ValueLength = int(image_symbol_string_table.attributes['ValueLength'].value, 0) 
+        self.image_symbol_string_table.Type = int(image_symbol_string_table.attributes['Type'].value, 0) 
                     
         print "__parser__", "end"
         
@@ -181,6 +181,12 @@ class COFF:
             # TODO
         
         print '__automatic_addresses__', 'end'
+        
+    def __parse_machine_type__(self, value):
+        if value in pefile.MACHINE_TYPE: 
+            return pefile.MACHINE_TYPE[value]
+        else:
+            return int(value, 0)
         
     def write(self, filename):
         
