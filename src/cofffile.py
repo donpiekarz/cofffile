@@ -112,15 +112,15 @@ class COFF:
             self.image_symbol_table.append(new_image_symbol_table_item)
             
         
-        # Image Symbol String Table
-        image_symbol_string_table = cofffile.getElementsByTagName("image_symbol_string_table")[0]
+        # Image Symbol String Table - in the future
+        #image_symbol_string_table = cofffile.getElementsByTagName("image_symbol_string_table")
         
         self.image_symbol_string_table = pefile.Structure(pefile.PE.__StringTable_format__)
         self.image_symbol_string_table.__unpacked_data_elms__ = (0, 0, 0)
-         
-        self.image_symbol_string_table.Length = int(image_symbol_string_table.attributes['Length'].value, 0)
-        self.image_symbol_string_table.ValueLength = int(image_symbol_string_table.attributes['ValueLength'].value, 0) 
-        self.image_symbol_string_table.Type = int(image_symbol_string_table.attributes['Type'].value, 0) 
+
+        self.image_symbol_string_table.Length = 0
+        self.image_symbol_string_table.ValueLength = 0
+        self.image_symbol_string_table.Type = 0
                     
         print "__parser__", "end"
         
